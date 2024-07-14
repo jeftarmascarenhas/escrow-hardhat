@@ -24,3 +24,13 @@ Compile the contracts using `npx hardhat compile`. The artifacts will be placed 
 
 To run the front-end application run `npm start` from the `/app` directory. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+```js
+ARBITER ADDRESS
+0x70997970C51812dc3A010C7d01b50e0d17dc79C8
+
+BENEFICIARY ADDRESS
+0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC
+
+DEPOSIT AMOUNT (IN ETH)
+1.0
+```
