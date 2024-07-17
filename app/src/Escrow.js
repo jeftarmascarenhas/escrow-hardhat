@@ -8,7 +8,6 @@ export default function Escrow({
   handleApprove,
   loadingApprove = false,
 }) {
-  console.log("complete", complete);
   return (
     <div className="existing-contract">
       <ul className="fields">

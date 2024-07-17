@@ -27,45 +27,6 @@ function App() {
     getAccounts();
   }, [account]);
 
-  const getEscrow = (address = "") =>
-    escrows.find((it) => it.address === address);
-
-  function handleApprove(escrowContract = { address: "" }) {
-    return async () => {
-      try {
-        escrowContract.on("Approved", () => {
-          // setEscrows(escrowsUpdate);
-          // document.getElementById(escrowContract.address).className =
-          //   "complete";
-          // document.getElementById(escrowContract.address).innerText =
-          //   "✓ It's been approved!";
-          const escrow = { ...getEscrow(escrowContract.address) };
-          const index = escrows.findIndex(
-            (it) => it.address === escrowContract.address
-          );
-          console.log("escrowContract => ", escrowContract);
-          const escrowsUpdate = [...escrows];
-
-          escrow.complete = true;
-          escrow.buttonName = "✓ It's been approved!";
-
-          escrowsUpdate[index] = escrow;
-
-          console.log(index, escrow);
-          console.log(index, escrowsUpdate);
-          console.log(index, escrowsUpdate[index]);
-
-          // setEscrows(escrowsUpdate);
-        });
-
-        const approveTx = await approve(escrowContract, signer);
-        await approveTx.wait();
-      } catch (error) {
-        console.log("Approve error: ", error);
-      }
-    };
-  }
-
   async function handleDeploy({ beneficiary, arbiter, value }) {
     try {
       setLoadingDeploy(true);
@@ -86,7 +47,20 @@ function App() {
         value: value.toString(),
         buttonName: "Approve",
         complete: false,
-        handleApprove: handleApprove(escrowContract),
+        handleApprove: async () => {
+          try {
+            escrowContract.on("Approved", () => {
+              document.getElementById(escrowContract.address).className =
+                "complete";
+              document.getElementById(escrowContract.address).innerText =
+                "✓ It's been approved!";
+            });
+
+            await approve(escrowContract, signer);
+          } catch (error) {
+            console.log("Approve error: ", error);
+          }
+        },
       };
 
       setEscrows([...escrows, escrow]);

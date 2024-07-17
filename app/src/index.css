@@ -50,6 +50,7 @@ input[type="number"] {
   font-size: 14px;
   letter-spacing: 1px;
   cursor: pointer;
+  border: transparent;
 }
 
 button:disabled {
